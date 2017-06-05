@@ -1,4 +1,4 @@
-# WiseQueue Application
+# AlarmOn Application
 
 ## Requirements
 
