@@ -1,4 +1,4 @@
-# WiseQueue Server NodeJS, Express
+# AlarmOn Server NodeJS, Express
 
 ## Requirements - Detailed in the parent readme
 
