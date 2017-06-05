@@ -23,3 +23,4 @@ sudo apt-get install curl
 
 ## Sensor
 - For details check the Readme under the **sensor** folder
+
