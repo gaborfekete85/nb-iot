@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar primary>
+    <ion-title>Edit</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="todo-edit">
+  <h2>Description</h2>
+  <ion-textarea #updatedTodo value="{{todo.description}}"></ion-textarea>
+  <small>Status: {{ todo.isComplete ? "Complete" : "Incomplete" }}</small>
+
+  <ion-row>
+    <ion-col width-40>
+      <button block (click)="saveTodo(updatedTodo.value)">
+        Save
+      </button>
+    </ion-col>
+    <ion-col width-40>
+      <button light block nav-pop (click)="back()">
+        Cancel
+      </button>
+    </ion-col>
+    <ion-col width-20>
+      <button danger block (click)="deleteTodo()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-content>

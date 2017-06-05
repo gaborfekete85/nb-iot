@@ -1,0 +1,45 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>
+      Current Location
+    </ion-title>
+
+
+    <!--<ion-toolbar>-->
+      <!--<ion-title>Menu</ion-title>-->
+    <!--</ion-toolbar>-->
+
+    <!--<ion-buttons end>-->
+      <!--<button ion-button icon-only (click)="addItem()"><ion-icon name="add-circle"></ion-icon></button>-->
+      <!--<button ion-button icon-only (click)="items()">items</button>-->
+    <!--</ion-buttons>-->
+  </ion-navbar>
+</ion-header>
+
+<!--<ion-menu [content]="content">-->
+  <!--</ion-header>-->
+
+  <!--<ion-content>-->
+    <!--<ion-list>-->
+      <!--<button menuClose ion-item>Home</button>-->
+      <!--<button menuClose ion-item>Login</button>-->
+    <!--</ion-list>-->
+  <!--</ion-content>-->
+
+<!--</ion-menu>-->
+
+
+<ion-content class="login-content" padding>
+  <div *ngIf="userName">
+    Logged in as {{ userName }} <button ion-button clear (click)="logout()">Logout</button> <br/>
+    Longitude: {{ longitude }}, Latitude: {{ latitude }}
+    <button ion-button (click)="getCoords()"><ion-icon name="ion-refresh"></ion-icon>Refresh coords manually</button>
+    <br/>
+
+  </div>
+
+  <div #map id="map"></div>
+
+</ion-content>
+
