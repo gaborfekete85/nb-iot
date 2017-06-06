@@ -1,4 +1,4 @@
-export LC_ALL=C
-mongod &
-node /home/pi/projects/Follower/server/server.js &
+#export LC_ALL=C
+#mongod &
+forever start server.js &
 
