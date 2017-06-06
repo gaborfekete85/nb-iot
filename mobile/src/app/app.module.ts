@@ -5,6 +5,7 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { TabsPage } from '../pages/tabs/tabs';
 import { MainPage } from '../pages/main/main';
 import { LocatorService } from "../providers/LocatorService";
+import { NotificationService } from "../providers/NotificationService";
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -42,6 +43,6 @@ const cloudSettings: CloudSettings = {
     TabsPage,
     MainPage
   ],
-  providers: [ MyApp, LocatorService ]
+  providers: [ MyApp, LocatorService, NotificationService ]
 })
 export class AppModule {}

@@ -52,22 +52,22 @@ router.route('/notify')
               postTokens.push(tokens[i].token);
           }
 
-          var post_data = {
-              "tokens" : postTokens,
-              "profile": "dev",
-              "notification": {
+          var post_data = JSON.stringify({
+              tokens : postTokens,
+              profile: 'dev',
+              notification: {
                   "message" : req.body.deviceId + " alarm on"
               }
-          };
+          });
 
           var post_options = {
-              "host": "api.ionic.io",
-	      "port": 443,
-              "path": "/push/notifications",
-              "method": "POST",
-              "headers": {
-                  "Content-Type": "application/json",
-                  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYTI0YWE5OS1jY2Q3LTRiY2ItYTZmMS00NTUwOTRmMzc4OGYifQ.qMwuWmSeFJG8aFcBjVaExj101MkL-NDQABgCmPJ7UqI"
+              host: 'api.ionic.io',
+              port: 443,
+              path: '/push/notifications',
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYTI0YWE5OS1jY2Q3LTRiY2ItYTZmMS00NTUwOTRmMzc4OGYifQ.qMwuWmSeFJG8aFcBjVaExj101MkL-NDQABgCmPJ7UqI'
               }
           };
 

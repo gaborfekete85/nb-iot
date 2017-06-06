@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 import { LocatorService } from '../../providers/LocatorService';
+import { NotificationService } from '../../providers/NotificationService';
 import { Http } from '@angular/http';
 import { Coordinate } from "../../domain/coordinate";
 import { Observable } from "rxjs/Observable";
@@ -26,17 +27,14 @@ export class MainPage {
   token : string;
 
 
-  constructor(private locatorService : LocatorService, public http: Http, private nav : NavController, private push: Push) {
+  constructor(private locatorService : LocatorService, public http: Http, private nav : NavController, private push: Push, private notificationService : NotificationService) {
     this.push.register().then((t: PushToken) => {
       return this.push.saveToken(t);
     }).then((t: PushToken) => {
       console.log('Token saved:' + t.token);
       this.token = t.token;
       this.locatorService.updateToken(Device.uuid, t.token)
-        .subscribe(data => {
-          this.coords = data;
-          this.addMarker();
-        });
+        .subscribe(data => {});
     });
 
     this.push.rx.notification()
@@ -47,6 +45,11 @@ export class MainPage {
     this.loadMap();
     this.updateCoords();
     setInterval(() => { this.updateCoords(); }, 5000);
+  }
+
+  notify() {
+      this.notificationService.notifiy("SENSOR-15")
+        .subscribe(data => {});
   }
 
   handleError(error) {
