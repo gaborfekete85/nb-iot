@@ -5,6 +5,7 @@ import { LocatorService } from '../../providers/LocatorService';
 import { Http } from '@angular/http';
 import { Coordinate } from "../../domain/coordinate";
 import { Observable } from "rxjs/Observable";
+import { Push, PushToken } from '@ionic/cloud-angular';
 
 declare var google;
 
@@ -21,8 +22,22 @@ export class MainPage {
   map: any;
   public coords:Coordinate[];
   markers = [];
+  token : string;
 
-  constructor(private locatorService : LocatorService, public http: Http, private nav : NavController) {
+
+  constructor(private locatorService : LocatorService, public http: Http, private nav : NavController, private push: Push) {
+    this.push.register().then((t: PushToken) => {
+      return this.push.saveToken(t);
+    }).then((t: PushToken) => {
+      console.log('Token saved:' + t.token);
+      this.token = t.token;
+    });
+
+    this.push.rx.notification()
+      .subscribe((msg) => {
+        alert(msg.title + ': ' + msg.text);
+      });
+
     this.loadMap();
     this.updateCoords();
     setInterval(() => { this.updateCoords(); }, 5000);
@@ -30,7 +45,7 @@ export class MainPage {
 
   handleError(error) {
     console.error(error);
-    alert("Error: " + error);
+    //alert("Error: " + error);
     return Observable.throw(error.json().error || 'Server error');
   }
 
@@ -44,14 +59,10 @@ export class MainPage {
           this.addMarker();
         });
     }).catch((error) => {
-      alert('Error occured' + error);
+      //alert('Error occured' + error);
       console.log('Error getting location', error);
     });
     // this.refreshMarkers();
-  }
-
-  public addItem() {
-    alert('Yuppee an item to be added 3 !');
   }
 
   ionViewDidEnter(){
