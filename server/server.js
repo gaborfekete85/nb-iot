@@ -5,6 +5,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('http');
+var https = require('https');
 var querystring = require('querystring');
 var app = express();
 var morgan = require('morgan');
@@ -72,7 +73,7 @@ router.route('/notify')
           };
 
           // Set up the request
-          var post_req = http.request(post_options, function(res) {
+          var post_req = https.request(post_options, function(res) {
               res.setEncoding('utf8');
               res.on('data', function (chunk) {
                   console.log('Response: ' + chunk);
