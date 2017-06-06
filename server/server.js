@@ -18,8 +18,6 @@ var port = process.env.PORT || 8000; // set our port
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/locator'); // connect to our database
-var Todo = require('./app/models/todo');
-var User = require('./app/models/user');
 var Coordinate = require('./app/models/coordinate');
 
 // ROUTES FOR OUR API
@@ -70,106 +68,6 @@ router.route('/coords')
       });
 
     });
-router.route('/user')
-
-  // create a bear (accessed at POST http://localhost:8080/bears)
-  .post(function (req, res) {
-      console.log('provider: ' + req.body.provider);
-      console.log('name: ' + req.body.name);
-      console.log('id: ' + req.body.id);
-
-      User.find({'provider' :  req.body.provider, 'id' : req.body.id}, function (err, dbUser) {
-      handleError(err, res);
-      console.log('dbUser: ' + dbUser);
-      if( dbUser == '') {
-        var user = new User().from(req);		// create a new instance of the Todo model
-        user.save(function (err) {
-          handleError(err, res);
-          res.json(user);
-        })
-      }
-    })
-  })
-  // get all the bears (accessed at GET http://localhost:8080/api/bears)
-  .get(function (req, res) {
-    User.find(function (err, todos) {
-      handleError(err, res);
-      res.json(todos);
-    });
-  })
-
-  // delete the bear with this id
-    .delete(function (req, res) {
-        User.remove({}, function (err, bear) {
-          if (err)
-            res.send(err);
-          res.json({});
-        })
-    });
-
-// on routes that end in /bears
-// ----------------------------------------------------
-router.route('/todos')
-
-  // create a bear (accessed at POST http://localhost:8080/bears)
-  .post(function (req, res) {
-    var todo = new Todo().from(req);		// create a new instance of the Todo model
-    todo.default().save(function (err) {
-      handleError(err, res);
-      res.json(todo);
-    });
-  })
-
-  // get all the bears (accessed at GET http://localhost:8080/api/bears)
-  .get(function (req, res) {
-    Todo.find({})
-      .populate('responsible')
-      .exec(function (err, todos) {
-        handleError(err, res);
-        res.json(todos);
-      });
-  });
-
-// on routes that end in /bears/:bear_id
-// ----------------------------------------------------
-router.route('/todos/:todo_id')
-
-  // get the bear with that id
-  .get(function (req, res) {
-    Todo.findById(req.params.todo_id)
-      .populate('responsible')
-      .exec(function (err, todo) {
-        handleError(err, res);
-        res.json(todo);
-      });
-  })
-
-  // update the bear with this id
-  .put(function (req, res) {
-    Todo.findById(req.params.todo_id)
-      .populate('responsible')
-      .exec(function (err, todo) {
-        handleError(err, res);
-        todo.from(req).save(function (err) {
-          handleError(err, res);
-          res.json(todo);
-        });
-      });
-  })
-
-  // delete the bear with this id
-  .delete(function (req, res) {
-    Todo.findById(req.params.todo_id, function (err, todo) {
-      Todo.remove({
-        _id: req.params.todo_id
-      }, function (err, bear) {
-        if (err)
-          res.send(err);
-
-        res.json(todo);
-      })
-    });
-  });
 
 function handleError(err, res) {
   if (err) {
