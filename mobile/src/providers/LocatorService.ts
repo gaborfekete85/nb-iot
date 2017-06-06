@@ -14,7 +14,10 @@ import { Geolocation, Device } from 'ionic-native';
  */
 @Injectable()
 export class LocatorService {
-  locationServiceUrl = "http://gaben.gleeze.com:8000/api/coords"
+  baseUrl = "http://192.168.0.24:8000/api";
+  locationServiceUrl = this.baseUrl + "/coords";
+  tokenServiceUrl = this.baseUrl + "/token";
+
   longitude = 0;
   latitude = 0;
   self = this;
@@ -67,6 +70,13 @@ export class LocatorService {
     let body = JSON.stringify(newCoordinate);
     let headers = new Headers({'Content-Type': 'application/json'});
     return this.http.post(this.locationServiceUrl, body, {headers: headers})
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  public updateToken(deviceId : string, token : string) {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    return this.http.post(this.tokenServiceUrl, { "deviceId" : deviceId, "token" : token }, {headers: headers})
       .map(res => res.json())
       .catch(this.handleError);
   }

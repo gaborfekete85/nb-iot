@@ -41,7 +41,7 @@ router.get('/', function (req, res) {
 
 router.route('/token')
     .post(function (req, res) {
-      console.log('Device: ' + req.body.devideId);
+      console.log('Device: ' + req.body.deviceId);
       console.log('Token: ' + req.body.token);
 
       PushToken.findOneAndUpdate({ 'deviceId' :  req.body.deviceId }, req.body, {upsert:true}, function(err, doc){
@@ -70,7 +70,7 @@ router.route('/token')
 
 router.route('/coords')
     .post(function (req, res) {
-      console.log('Device: ' + req.body.devideId);
+      console.log('Device: ' + req.body.deviceId);
       console.log('Longitude: ' + req.body.longitude);
       console.log('Latitude: ' + req.body.latitude);
 

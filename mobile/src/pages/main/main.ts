@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import { Coordinate } from "../../domain/coordinate";
 import { Observable } from "rxjs/Observable";
 import { Push, PushToken } from '@ionic/cloud-angular';
+import { Device } from 'ionic-native';
 
 declare var google;
 
@@ -31,6 +32,11 @@ export class MainPage {
     }).then((t: PushToken) => {
       console.log('Token saved:' + t.token);
       this.token = t.token;
+      this.locatorService.updateToken(Device.uuid, t.token)
+        .subscribe(data => {
+          this.coords = data;
+          this.addMarker();
+        });
     });
 
     this.push.rx.notification()
@@ -53,7 +59,7 @@ export class MainPage {
     Geolocation.getCurrentPosition().then((resp) => {
       this.longitude = resp.coords.longitude;
       this.latitude = resp.coords.latitude;
-      this.locatorService.save('Gaben-Device', this.longitude, this.latitude)
+      this.locatorService.save(Device.uuid, this.longitude, this.latitude)
         .subscribe(data => {
           this.coords = data;
           this.addMarker();
