@@ -68,7 +68,7 @@ void loop()
             if (alarm == false)
             {
                 request.body = "{\
-                    \"tokens\": [\"d178z9cSGoo:APA91bHsQMZxL2QM5vWTNVP0ASFAAlqZGPVOJAAFPIImCNgmgC4aAmw1qu-VkANEC6MvdXtmQ9HhYzOX3xuoHw_z2mttQyosVZ-MdPsxZjBVIuuQueIYd6UaGUuu9b3ZoZnQdryZhgBV\"],\
+                    \"tokens\": [\"flA2BvQ0tHw:APA91bHTWSOSDaCtGgMuoemZJlMFghWoP2OkUJUOkKLwjf1eYrUvAU7ANEbLH0Bk8N2rKdsYvtHPKZhIMDVZ_mzhdlLdqzrgHCPCU1cQ_N7xINeIWcMZv9V5ZLqxHaBTSj7QI0EKFZ3q\"],\
                     \"profile\": \"dev\",\
                     \"notification\": {\
                     \"message\": \"Alarm on!\"\
@@ -120,12 +120,14 @@ void loop()
         
                 // Get request
                 http.post(request, response, headers);
-                
-                // Turn off GPS
-        		digitalWrite(GPS_EN, LOW);
         	}
 	    }
+	    
+	    // Turn off GPS
+        digitalWrite(GPS_EN, LOW);
     }
+    
+    delay(1000);
     
     System.sleep(SLEEP_MODE_DEEP, 86400);
 }
