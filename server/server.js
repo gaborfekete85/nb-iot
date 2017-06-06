@@ -4,6 +4,8 @@
 // call the packages we need
 var express = require('express');
 var bodyParser = require('body-parser');
+var http = require('http');
+var querystring = require('querystring');
 var app = express();
 var morgan = require('morgan');
 
@@ -39,6 +41,52 @@ router.get('/', function (req, res) {
   res.json({message: 'hooray! welcome to our api!'});
 });
 
+router.route('/notify')
+    .post(function (req, res) {
+      console.log('Device: ' + req.body.deviceId);
+      PushToken.find(function (err, tokens) {
+        handleError(err, res);
+
+          var postTokens = [];
+          for (var i = 0; i < tokens; i++) {
+              postTokens.push(tokens[i].tokens);
+          }
+
+          var post_data = querystring.stringify({
+              'tokens' : postTokens,
+              'profile': 'json',
+              'notification': {
+                  'message' : req.body.deviceId + " alarm on"
+              }
+          });
+
+          var post_options = {
+              host: 'https://api.ionic.io/push/notifications',
+              port: '80',
+              path: '',
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYTI0YWE5OS1jY2Q3LTRiY2ItYTZmMS00NTUwOTRmMzc4OGYifQ.qMwuWmSeFJG8aFcBjVaExj101MkL-NDQABgCmPJ7UqI'
+              }
+          };
+
+          // Set up the request
+          var post_req = http.request(post_options, function(res) {
+              res.setEncoding('utf8');
+              res.on('data', function (chunk) {
+                  console.log('Response: ' + chunk);
+              });
+          });
+
+          // post the data
+          post_req.write(post_data);
+          post_req.end();
+
+          res.json(tokens);
+      });
+    });
+
 router.route('/token')
     .post(function (req, res) {
       console.log('Device: ' + req.body.deviceId);
@@ -46,17 +94,17 @@ router.route('/token')
 
       PushToken.findOneAndUpdate({ 'deviceId' :  req.body.deviceId }, req.body, {upsert:true}, function(err, doc){
         if (err) return res.send(500, { error: err });
-        PushToken.find(function (err, coordinates) {
+        PushToken.find(function (err, token) {
           handleError(err, res);
-          res.json(coordinates);
+          res.json(token);
         });
       });
     })
 
     .get(function (req, res) {
-      PushToken.find(function (err, coordinates) {
+      PushToken.find(function (err, tokens) {
         handleError(err, res);
-        res.json(coordinates);
+        res.json(tokens);
       });
     })
 

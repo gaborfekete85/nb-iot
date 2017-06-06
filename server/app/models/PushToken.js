@@ -8,7 +8,7 @@ var PushTokenSchema = new Schema({
 
 PushTokenSchema.methods.from = function(req) {
     this.deviceId = req.body.deviceId;
-    this.token = req.body.token;
+    this.tokens = req.body.token;
     return this;
 };
 
