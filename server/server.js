@@ -87,7 +87,7 @@ router.route('/notify')
           post_req.write(post_data);
           post_req.end();
 
-//          res.json(tokens);
+          res.send("Notifications successfully sent out!");
       });
     });
 
