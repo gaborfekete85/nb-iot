@@ -87,7 +87,7 @@ router.route('/notify')
           post_req.write(post_data);
           post_req.end();
 
-          res.send("Notifications successfully sent out!");
+          res.json( { result : "Notifications successfully sent out!"} );
       });
     });
 
