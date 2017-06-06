@@ -19,6 +19,7 @@ var port = process.env.PORT || 8000; // set our port
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/locator'); // connect to our database
 var Coordinate = require('./app/models/coordinate');
+var PushToken = require('./app/models/PushToken');
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -37,6 +38,35 @@ router.use(function (req, res, next) {
 router.get('/', function (req, res) {
   res.json({message: 'hooray! welcome to our api!'});
 });
+
+router.route('/token')
+    .post(function (req, res) {
+      console.log('Device: ' + req.body.devideId);
+      console.log('Token: ' + req.body.token);
+
+      PushToken.findOneAndUpdate({ 'deviceId' :  req.body.deviceId }, req.body, {upsert:true}, function(err, doc){
+        if (err) return res.send(500, { error: err });
+        PushToken.find(function (err, coordinates) {
+          handleError(err, res);
+          res.json(coordinates);
+        });
+      });
+    })
+
+    .get(function (req, res) {
+      PushToken.find(function (err, coordinates) {
+        handleError(err, res);
+        res.json(coordinates);
+      });
+    })
+
+    .delete(function (req, res) {
+      console.log(req.body);
+      PushToken.findOneAndRemove({'_id' : req.body.id}, function (err,offer){
+        return res.send("Succesfully deleted: " + req.body.id);
+      });
+    });
+
 
 router.route('/coords')
     .post(function (req, res) {
