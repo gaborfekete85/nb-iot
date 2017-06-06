@@ -48,26 +48,26 @@ router.route('/notify')
         handleError(err, res);
 
           var postTokens = [];
-          for (var i = 0; i < tokens; i++) {
-              postTokens.push(tokens[i].tokens);
+          for (var i = 0; i < tokens.length ; i++) {
+              postTokens.push(tokens[i].token);
           }
 
-          var post_data = querystring.stringify({
-              'tokens' : postTokens,
-              'profile': 'json',
-              'notification': {
-                  'message' : req.body.deviceId + " alarm on"
+          var post_data = {
+              "tokens" : postTokens,
+              "profile": "dev",
+              "notification": {
+                  "message" : req.body.deviceId + " alarm on"
               }
-          });
+          };
 
           var post_options = {
-              host: 'https://api.ionic.io/push/notifications',
-              port: '80',
-              path: '',
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYTI0YWE5OS1jY2Q3LTRiY2ItYTZmMS00NTUwOTRmMzc4OGYifQ.qMwuWmSeFJG8aFcBjVaExj101MkL-NDQABgCmPJ7UqI'
+              "host": "api.ionic.io",
+	      "port": 443,
+              "path": "/push/notifications",
+              "method": "POST",
+              "headers": {
+                  "Content-Type": "application/json",
+                  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYTI0YWE5OS1jY2Q3LTRiY2ItYTZmMS00NTUwOTRmMzc4OGYifQ.qMwuWmSeFJG8aFcBjVaExj101MkL-NDQABgCmPJ7UqI"
               }
           };
 
@@ -78,12 +78,15 @@ router.route('/notify')
                   console.log('Response: ' + chunk);
               });
           });
+	    
+	console.log(post_data);
+	console.log(post_options);
 
           // post the data
           post_req.write(post_data);
           post_req.end();
 
-          res.json(tokens);
+//          res.json(tokens);
       });
     });
 
