@@ -3,7 +3,7 @@ var Schema       = mongoose.Schema;
 
 var PushTokenSchema = new Schema({
     deviceId : String,
-    token : string
+    token : String
 });
 
 PushTokenSchema.methods.from = function(req) {
