@@ -33,6 +33,7 @@ export class MyApp {
         return this.push.saveToken(t);
       }).then((t: PushToken) => {
         console.log('Token saved:' + t.token);
+        alert('Your token is: ' + t.token);
       });
 
       this.push.rx.notification()

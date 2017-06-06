@@ -1,18 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Facebook, FacebookLoginResponse } from 'ionic-native';
-
-import { ItemsPage } from '../items/items';
 import { Geolocation } from 'ionic-native';
-//import {Observable} from 'rxjs/Rx';
-
-//import {MongoTodoService} from '../../providers/mongoTodoService';
-import {LocatorService} from '../../providers/LocatorService';
-
+import { LocatorService } from '../../providers/LocatorService';
 import { Http } from '@angular/http';
-import {Coordinate} from "../../domain/coordinate";
-import {Observable} from "rxjs/Observable";
-// import {Coordinate} from '../../domain/coordinate';
+import { Coordinate } from "../../domain/coordinate";
+import { Observable } from "rxjs/Observable";
 
 declare var google;
 
@@ -27,22 +19,10 @@ export class MainPage {
   latitude = 20;
   @ViewChild('map') mapElement: ElementRef;
   map: any;
-  todosUrl = "http://10.0.12.219:8000/api/coords";
   public coords:Coordinate[];
   markers = [];
 
   constructor(private locatorService : LocatorService, public http: Http, private nav : NavController) {
-    Facebook.login(['email']).then((response:FacebookLoginResponse) => {
-      Facebook.getAccessToken().then((v) => {
-        Facebook.api("/me?fields=id%2Cname&access_token="+v, ['public_profile'])
-        .then((profile) => {
-            this.userName = profile.name;
-          })
-        .catch((error) => {
-            console.log("Unable to login with facebbok");
-        }) ;
-      });
-    });
     this.loadMap();
     this.updateCoords();
     setInterval(() => { this.updateCoords(); }, 5000);
@@ -73,11 +53,6 @@ export class MainPage {
   public addItem() {
     alert('Yuppee an item to be added 3 !');
   }
-
-  public items() {
-    this.nav.push(ItemsPage);
-  }
-
 
   ionViewDidEnter(){
     this.loadMap();
@@ -153,6 +128,4 @@ export class MainPage {
     });
 
   }
-
-
 };

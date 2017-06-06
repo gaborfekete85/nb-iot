@@ -14,8 +14,7 @@ import { Geolocation, Device } from 'ionic-native';
  */
 @Injectable()
 export class LocatorService {
-  // 213.222.183.206
-  todosUrl = "http://10.0.12.219:8000/api/coords"
+  locationServiceUrl = "http://192.168.0.24:8000/api/coords"
   longitude = 0;
   latitude = 0;
   self = this;
@@ -36,7 +35,7 @@ export class LocatorService {
 
   // Get all todos
   public load(): Observable<Coordinate[]> {
-    return this.http.get(this.todosUrl)
+    return this.http.get(this.locationServiceUrl)
       .map(res => res.json())
       .catch(this.handleError);
   }
@@ -67,7 +66,7 @@ export class LocatorService {
     let newCoordinate = new Coordinate(deviceId, longitude, latitude);
     let body = JSON.stringify(newCoordinate);
     let headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post(this.todosUrl, body, {headers: headers})
+    return this.http.post(this.locationServiceUrl, body, {headers: headers})
       .map(res => res.json())
       .catch(this.handleError);
   }
