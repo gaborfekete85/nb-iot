@@ -42,6 +42,6 @@ const cloudSettings: CloudSettings = {
     TabsPage,
     MainPage
   ],
-  providers: [ LocatorService ]
+  providers: [ MyApp, LocatorService ]
 })
 export class AppModule {}
