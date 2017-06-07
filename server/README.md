@@ -1,5 +1,8 @@
 # AlarmOn Server NodeJS, Express
 
+# For NB IoT No need to install the server manually
+-  There is a running instance: http://gaben.gleeze.com:8000/api
+
 ## Requirements - Detailed in the parent readme
 
 - Node and npm - Installation detailed in the parent readme
