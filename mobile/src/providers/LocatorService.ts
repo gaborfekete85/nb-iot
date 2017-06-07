@@ -14,7 +14,7 @@ import { Geolocation, Device } from 'ionic-native';
  */
 @Injectable()
 export class LocatorService {
-  baseUrl = "http://192.168.0.24:8000/api";
+  baseUrl = "http://gaben.gleeze.com:8000/api";
   locationServiceUrl = this.baseUrl + "/coords";
   tokenServiceUrl = this.baseUrl + "/token";
 
