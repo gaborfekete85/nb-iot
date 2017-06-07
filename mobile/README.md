@@ -1,6 +1,6 @@
 # IONIC 2 Mobile Application
 
-# For NB IoT No need setup manually
+# For NB IoT No need to setup manually
 - There is an installable android package under the apk folder
 
 ## Requirements
