@@ -1,7 +1,7 @@
 # IONIC 2 Mobile Application
 
 # For NB IoT No need setup manually
-- You can install the application on adnroid with the apk/android-debug.apk
+- There is an installable android package under the apk folder
 
 ## Requirements
 - Node, npm - Installation detailed in the parent readme
